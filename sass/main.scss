@@ -1,1 +1,8 @@
 @import "bootstrap";
+
+
+form{
+	@include make-row();
+	@include make-lg-column(4);
+	padding: 2em;
+}

@@ -5817,4 +5817,22 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+form {
+  margin-left: -15px;
+  margin-right: -15px;
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding: 2em; }
+  form:before, form:after {
+    content: " ";
+    display: table; }
+  form:after {
+    clear: both; }
+  @media (min-width: 1200px) {
+    form {
+      float: left;
+      width: 33.33333%; } }
+
 /*# sourceMappingURL=main.css.map */
