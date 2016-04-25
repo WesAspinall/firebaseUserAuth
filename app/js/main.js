@@ -1,15 +1,34 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var CreateUserController = function CreateUserController(CreateUserService) {};
+var CreateUserController = function CreateUserController(CreateUserService, $scope, $firebaseAuth, FIREBASE_URL) {
 
-CreateUserController.$inject = ['CreateUserService'];
+  var ref = new Firebase(FIREBASE_URL);
+  var auth = $firebaseAuth(ref);
 
-exports['default'] = CreateUserController;
-module.exports = exports['default'];
+  $scope.login = function () {
+    $scope.message = "Welcome" + $scope.user.email;
+  };
+
+  $scope.register = function () {
+    auth.$createUser({
+      email: $scope.user.email,
+      password: $scope.user.password
+    }).then(function (regUser) {
+      $scope.message = "Hi" + $scope.user.firstname;
+    })["catch"](function (error) {
+      $scope.message = error.message;
+    }); //createUser
+  }; //register
+}; //controller
+
+CreateUserController.$inject = ['CreateUserService', '$scope', '$firebaseAuth', 'FIREBASE_URL'];
+
+exports["default"] = CreateUserController;
+module.exports = exports["default"];
 
 },{}],2:[function(require,module,exports){
 'use strict';
@@ -24,46 +43,15 @@ var _controllersCreateUserController = require('./controllers/createUser.control
 
 var _controllersCreateUserController2 = _interopRequireDefault(_controllersCreateUserController);
 
-var _servicesCreateUserService = require('./services/createUser.service');
+_angular2['default'].module('app.auth', []).controller('CreateUserController', _controllersCreateUserController2['default']);
 
-var _servicesCreateUserService2 = _interopRequireDefault(_servicesCreateUserService);
-
-_angular2['default'].module('app.auth', []).controller('CreateUserController', _controllersCreateUserController2['default']).service('CreateUserService', _servicesCreateUserService2['default']);
-
-},{"./controllers/createUser.controller":1,"./services/createUser.service":3,"angular":9}],3:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var CreateUserService = function CreateUserService($http) {
-
-  var ref = new Firebase("https://waspnx.firebaseio.com");
-
-  ref.authWithPassword({
-    email: "bobtony@firebase.com",
-    password: "correcthorsebatterystaple"
-  }, function (error, authData) {
-    if (error) {
-      console.log("Login Failed!", error);
-    } else {
-      console.log("Authenticated successfully with payload:", authData);
-    }
-  });
-};
-
-CreateUserService.$inject = ['$http'];
-
-exports["default"] = CreateUserService;
-module.exports = exports["default"];
-
-},{}],4:[function(require,module,exports){
+},{"./controllers/createUser.controller":1,"angular":9}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var config = function config($stateProvider, $urlRouterProvider) {
+var config = function config($stateProvider, $urlRouterProvider, firebase) {
 
   $urlRouterProvider.otherwise('/');
 
@@ -78,10 +66,23 @@ var config = function config($stateProvider, $urlRouterProvider) {
   });
 };
 
-config.$inject = ['$stateProvider', '$urlRouterProvider'];
+config.$inject = ['$stateProvider', '$urlRouterProvider', 'firebase'];
 
 exports['default'] = config;
 module.exports = exports['default'];
+
+},{}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = {
+
+  URL: "https://waspnx.firebaseio.com"
+
+};
+module.exports = exports["default"];
 
 },{}],5:[function(require,module,exports){
 'use strict';
@@ -98,9 +99,13 @@ var _config = require('./config');
 
 var _config2 = _interopRequireDefault(_config);
 
-_angular2['default'].module('app.core', ['ui.router']).config(_config2['default']);
+var _constantsFirebaseConstant = require('./constants/firebase.constant');
 
-},{"./config":4,"angular":9,"angular-ui-router":7}],6:[function(require,module,exports){
+var _constantsFirebaseConstant2 = _interopRequireDefault(_constantsFirebaseConstant);
+
+_angular2['default'].module('app.core', ['ui.router']).config(_config2['default']).constant('FIREBASE_URL', _constantsFirebaseConstant2['default']);
+
+},{"./config":3,"./constants/firebase.constant":4,"angular":9,"angular-ui-router":7}],6:[function(require,module,exports){
 // Make sure shim jQuery first
 'use strict';
 

@@ -3,6 +3,6 @@
 
 form{
 	@include make-row();
-	@include make-lg-column(4);
+	@include make-lg-column(6);
 	padding: 2em;
 }

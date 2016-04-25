@@ -1,4 +1,4 @@
-let config = function($stateProvider, $urlRouterProvider) {
+let config = function($stateProvider, $urlRouterProvider, firebase) {
   
   $urlRouterProvider.otherwise('/');
 
@@ -16,7 +16,7 @@ let config = function($stateProvider, $urlRouterProvider) {
    
 };
 
-config.$inject = ['$stateProvider', '$urlRouterProvider'];
+config.$inject = ['$stateProvider', '$urlRouterProvider', 'firebase'];
 
 export default config;
 
