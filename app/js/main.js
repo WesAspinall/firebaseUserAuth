@@ -36,13 +36,13 @@ _angular2['default'].module('app.auth', []).controller('CreateUserController', _
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var CreateUserService = function CreateUserService() {
+var CreateUserService = function CreateUserService($http) {
 
   var ref = new Firebase("https://waspnx.firebaseio.com");
 
   ref.authWithPassword({
-    email: "waspnx@gmail.com",
-    password: "admin"
+    email: "bobtony@firebase.com",
+    password: "correcthorsebatterystaple"
   }, function (error, authData) {
     if (error) {
       console.log("Login Failed!", error);
@@ -52,7 +52,7 @@ var CreateUserService = function CreateUserService() {
   });
 };
 
-CreateUserService.$inject = [];
+CreateUserService.$inject = ['$http'];
 
 exports["default"] = CreateUserService;
 module.exports = exports["default"];

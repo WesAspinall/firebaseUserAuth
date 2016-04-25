@@ -1,6 +1,7 @@
 let CreateUserController = function(CreateUserService){
 
 
+
 };
 
 CreateUserController.$inject = ['CreateUserService'];

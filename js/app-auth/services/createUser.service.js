@@ -1,10 +1,10 @@
-let CreateUserService = function(){
+let CreateUserService = function($http){
 
   let ref = new Firebase("https://waspnx.firebaseio.com");
 
   ref.authWithPassword({
-    email    : "waspnx@gmail.com",
-    password : "admin"
+    email    : "bobtony@firebase.com",
+    password : "correcthorsebatterystaple"
   }, function(error, authData) {
     if (error) {
       console.log("Login Failed!", error);
@@ -15,6 +15,6 @@ let CreateUserService = function(){
 
 };
 
-CreateUserService.$inject = [];
+CreateUserService.$inject = ['$http'];
 
 export default CreateUserService;
